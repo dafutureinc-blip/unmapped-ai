@@ -17,110 +17,164 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
       background: #080a0b;
       color: #f4f4f4;
+      min-height: 100vh;
     }
 
     .container {
-      max-width: 920px;
+      width: min(900px, calc(100% - 32px));
       margin: 0 auto;
-      padding: 40px 24px 80px;
+      padding: 42px 0 80px;
     }
 
     .header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 40px;
+      margin-bottom: 34px;
     }
 
     .brand {
-      font-size: 24px;
+      font-size: 25px;
       font-weight: 800;
       letter-spacing: 1px;
     }
 
     .brand span {
-      color: #91a98b;
+      color: #9caf91;
     }
 
     button {
       border: 0;
       border-radius: 8px;
-      padding: 12px 18px;
-      font-size: 14px;
+      padding: 13px 20px;
+      font-size: 15px;
       font-weight: 700;
       cursor: pointer;
     }
 
     .signout {
       background: #24282b;
-      color: white;
+      color: #ffffff;
     }
 
     .card {
       background: #15191b;
-      border: 1px solid #252a2d;
-      border-radius: 16px;
+      border: 1px solid #292e31;
+      border-radius: 14px;
       padding: 24px;
       margin-bottom: 20px;
     }
 
     h1 {
-      margin: 0 0 12px;
-      font-size: 30px;
+      margin: 0 0 10px;
+      font-size: 29px;
     }
 
     h2 {
-      margin: 0 0 12px;
+      margin: 0 0 14px;
       font-size: 20px;
     }
 
     .description {
-      color: #9ca3a7;
+      color: #a9afb3;
       line-height: 1.6;
       margin-bottom: 18px;
     }
 
     textarea {
       width: 100%;
-      min-height: 190px;
+      min-height: 180px;
       resize: vertical;
-      background: #090c0d;
-      color: white;
+      background: #080a0b;
+      color: #ffffff;
       border: 1px solid #30363a;
-      border-radius: 10px;
+      border-radius: 9px;
       padding: 16px;
-      font-size: 15px;
+      font-size: 16px;
       line-height: 1.5;
       outline: none;
     }
 
     textarea:focus {
-      border-color: #91a98b;
+      border-color: #9caf91;
     }
 
     .actions {
       display: flex;
       gap: 10px;
-      margin-top: 14px;
       flex-wrap: wrap;
+      margin-top: 14px;
     }
 
     .draft {
-      background: #91a98b;
-      color: #0a0d0b;
+      background: #9caf91;
+      color: #101310;
     }
 
     .publish {
       background: #ffffff;
-      color: #111;
+      color: #111111;
     }
 
     .clear {
       background: #24282b;
-      color: white;
+      color: #ffffff;
     }
 
     .status {
+      margin-top: 14px;
+      padding: 12px 14px;
+      border-radius: 8px;
+      background: #202528;
+      color: #d7dbdd;
+      display: none;
+      line-height: 1.5;
+    }
+
+    .status.success {
+      display: block;
+      background: #17231a;
+      color: #b8d2b4;
+    }
+
+    .status.error {
+      display: block;
+      background: #281719;
+      color: #e4aaaa;
+    }
+
+    .login {
+      max-width: 500px;
+      margin: 100px auto;
+    }
+
+    .login h1 {
+      margin-bottom: 10px;
+    }
+
+    input {
+      width: 100%;
+      background: #080a0b;
+      color: #ffffff;
+      border: 1px solid #30363a;
+      border-radius: 8px;
+      padding: 14px;
+      font-size: 16px;
+      margin-bottom: 12px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #9caf91;
+    }
+
+    .login button {
+      width: 100%;
+      background: #9caf91;
+      color: #101310;
+    }
+
+    .linkedin-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -128,46 +182,53 @@
     }
 
     .connected {
-      color: #91a98b;
+      color: #a9c69e;
+      font-weight: 700;
+    }
+
+    .not-connected {
+      color: #d39a9a;
       font-weight: 700;
     }
 
     .automation {
-      color: #a6abad;
+      color: #a9afb3;
       line-height: 1.7;
+      font-size: 15px;
     }
 
-    .message {
-      margin-top: 16px;
-      padding: 12px 14px;
-      border-radius: 8px;
-      background: #202528;
-      color: #d9dddd;
-      display: none;
+    .badge {
+      display: inline-block;
+      margin-top: 14px;
+      padding: 5px 10px;
+      border-radius: 20px;
+      background: #203023;
+      color: #a9c69e;
+      font-size: 12px;
+      font-weight: 700;
     }
 
-    .small {
-      color: #8d969a;
-      font-size: 13px;
-      margin-top: 10px;
+    .hidden {
+      display: none !important;
     }
 
-    @media (max-width: 650px) {
+    @media (max-width: 600px) {
       .container {
-        padding: 24px 16px 60px;
+        width: min(100% - 20px, 900px);
+        padding-top: 25px;
       }
 
       .header {
-        margin-bottom: 24px;
-      }
-
-      h1 {
-        font-size: 26px;
-      }
-
-      .status {
         align-items: flex-start;
+      }
+
+      .linkedin-row {
         flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .linkedin-row button {
+        width: 100%;
       }
     }
   </style>
@@ -175,138 +236,418 @@
 
 <body>
 
-<div class="container">
-
-  <div class="header">
+  <!-- LOGIN -->
+  <div id="loginScreen" class="login card hidden">
     <div class="brand">UNMAPPED <span>AI</span></div>
-    <button class="signout" id="signOutBtn">Sign Out</button>
-  </div>
 
-  <div class="card">
-
-    <h1>What are we working on?</h1>
+    <h1 style="margin-top: 28px;">Sign in</h1>
 
     <div class="description">
-      Give UNMAPPED a thought, story, photograph, link, observation, or rough idea.
-      The system will eventually research, write, challenge and prepare it for approval.
+      Your private workspace for LinkedIn content and automation.
     </div>
 
-    <textarea id="postText"
-      placeholder="Write your idea, draft, observation or LinkedIn post here..."></textarea>
+    <input
+      id="email"
+      type="email"
+      placeholder="Email"
+      autocomplete="email"
+    >
 
-    <div class="actions">
-      <button class="draft" id="createDraftBtn">Create Draft</button>
-      <button class="publish" id="publishBtn">Publish to LinkedIn</button>
-      <button class="clear" id="clearBtn">Clear</button>
-    </div>
+    <input
+      id="password"
+      type="password"
+      placeholder="Password"
+      autocomplete="current-password"
+    >
 
-    <div class="small">
-      Publishing sends the text above directly to your personal LinkedIn profile.
-    </div>
+    <button id="loginBtn">Sign In</button>
 
-    <div class="message" id="message"></div>
-
+    <div id="loginMessage" class="status"></div>
   </div>
 
-  <div class="card">
 
-    <div class="status">
+  <!-- APP -->
+  <div id="appScreen" class="container hidden">
 
-      <div>
-        <h2>LinkedIn</h2>
-        <div class="connected">● Connected</div>
-        <div class="small">Personal LinkedIn profile publishing</div>
+    <div class="header">
+      <div class="brand">UNMAPPED <span>AI</span></div>
+      <button id="signOutBtn" class="signout">Sign Out</button>
+    </div>
+
+
+    <!-- CONTENT INPUT -->
+    <div class="card">
+
+      <h1>What are we working on?</h1>
+
+      <div class="description">
+        Give UNMAPPED a thought, story, photograph, link, observation,
+        or rough idea. The system will eventually research, write,
+        challenge and prepare it for approval.
       </div>
 
-      <button class="draft" id="reconnectBtn">
-        Reconnect LinkedIn
-      </button>
+      <textarea
+        id="postText"
+        placeholder="Write your idea, draft, observation or LinkedIn post here..."
+      ></textarea>
+
+      <div class="actions">
+        <button id="createDraftBtn" class="draft">Create Draft</button>
+        <button id="publishBtn" class="publish">Publish to LinkedIn</button>
+        <button id="clearBtn" class="clear">Clear</button>
+      </div>
+
+      <div id="message" class="status"></div>
+
+    </div>
+
+
+    <!-- LINKEDIN -->
+    <div class="card">
+
+      <div class="linkedin-row">
+
+        <div>
+          <h2>LinkedIn</h2>
+
+          <div id="linkedinStatus" class="connected">
+            ● Connected
+          </div>
+
+          <div class="description" style="margin: 4px 0 0;">
+            Personal LinkedIn profile publishing
+          </div>
+        </div>
+
+        <button id="reconnectBtn" class="draft">
+          Reconnect LinkedIn
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- AUTOMATION -->
+    <div class="card">
+
+      <h2>Automation</h2>
+
+      <div class="automation">
+        Content → Research → Draft → Voice Review → Fact Check
+        → Approval → LinkedIn
+      </div>
+
+      <div class="badge">
+        MVP BUILD
+      </div>
 
     </div>
 
   </div>
 
-  <div class="card">
-
-    <h2>Automation</h2>
-
-    <div class="automation">
-      Content → Research → Draft → Voice Review → Fact Check → Approval → LinkedIn
-    </div>
-
-    <div class="small">
-      MVP BUILD
-    </div>
-
-  </div>
-
-</div>
 
 <script>
 
-  const SUPABASE_URL = "https://rdcqxvprrlmnfhijouez.supabase.co";
+  /* =========================================================
+     UNMAPPED AI CONFIGURATION
+     ========================================================= */
+
+  const SUPABASE_URL =
+    "https://rdcqxvprrlmnfhijouez.supabase.co";
 
   const SUPABASE_PUBLISHABLE_KEY =
     "sb_publishable_p5z4XeG6zW9R4ZoqrqP9NA_wFATr18j";
 
-  const supabaseClient = window.supabase.createClient(
+
+  /* =========================================================
+     SUPABASE CLIENT
+     ========================================================= */
+
+  const supabaseClient = supabase.createClient(
     SUPABASE_URL,
-    SUPABASE_PUBLISHABLE_KEY
+    SUPABASE_PUBLISHABLE_KEY,
+    {
+      auth: {
+        persistSession: true,
+        autoRefreshToken: true,
+        detectSessionInUrl: true,
+        storage: window.localStorage
+      }
+    }
   );
 
+
+  /* =========================================================
+     ELEMENTS
+     ========================================================= */
+
+  const loginScreen = document.getElementById("loginScreen");
+  const appScreen = document.getElementById("appScreen");
+
+  const emailInput = document.getElementById("email");
+  const passwordInput = document.getElementById("password");
+
+  const loginBtn = document.getElementById("loginBtn");
+  const loginMessage = document.getElementById("loginMessage");
+
+  const signOutBtn = document.getElementById("signOutBtn");
+
   const postText = document.getElementById("postText");
-  const message = document.getElementById("message");
 
-  function showMessage(text) {
+  const createDraftBtn =
+    document.getElementById("createDraftBtn");
+
+  const publishBtn =
+    document.getElementById("publishBtn");
+
+  const clearBtn =
+    document.getElementById("clearBtn");
+
+  const reconnectBtn =
+    document.getElementById("reconnectBtn");
+
+  const message =
+    document.getElementById("message");
+
+
+  /* =========================================================
+     UI HELPERS
+     ========================================================= */
+
+  function showLoginMessage(text, type = "error") {
+    loginMessage.textContent = text;
+    loginMessage.className = "status " + type;
+  }
+
+
+  function showMessage(text, type = "success") {
     message.textContent = text;
-    message.style.display = "block";
+    message.className = "status " + type;
   }
 
-  function hideMessage() {
-    message.style.display = "none";
+
+  function clearMessage() {
+    message.textContent = "";
+    message.className = "status";
   }
 
-  document.getElementById("clearBtn").addEventListener("click", () => {
+
+  function showApp() {
+    loginScreen.classList.add("hidden");
+    appScreen.classList.remove("hidden");
+  }
+
+
+  function showLogin() {
+    appScreen.classList.add("hidden");
+    loginScreen.classList.remove("hidden");
+  }
+
+
+  /* =========================================================
+     AUTHENTICATION
+     ========================================================= */
+
+  async function loadSession() {
+
+    const {
+      data,
+      error
+    } = await supabaseClient.auth.getSession();
+
+    if (error) {
+      console.error("Session error:", error);
+      showLogin();
+      return;
+    }
+
+    if (data.session) {
+      showApp();
+    } else {
+      showLogin();
+    }
+  }
+
+
+  supabaseClient.auth.onAuthStateChange(
+    (event, session) => {
+
+      console.log("Auth event:", event);
+
+      if (
+        event === "SIGNED_IN" ||
+        event === "TOKEN_REFRESHED" ||
+        event === "INITIAL_SESSION"
+      ) {
+        if (session) {
+          showApp();
+        }
+      }
+
+      if (event === "SIGNED_OUT") {
+        showLogin();
+      }
+    }
+  );
+
+
+  /* =========================================================
+     SIGN IN
+     ========================================================= */
+
+  loginBtn.addEventListener("click", async () => {
+
+    const email = emailInput.value.trim();
+    const password = passwordInput.value;
+
+    if (!email || !password) {
+      showLoginMessage("Enter your email and password.");
+      return;
+    }
+
+    loginBtn.disabled = true;
+    loginBtn.textContent = "Signing In...";
+
+    const {
+      error
+    } = await supabaseClient.auth.signInWithPassword({
+      email,
+      password
+    });
+
+    loginBtn.disabled = false;
+    loginBtn.textContent = "Sign In";
+
+    if (error) {
+      console.error(error);
+      showLoginMessage(error.message);
+      return;
+    }
+
+    passwordInput.value = "";
+    showApp();
+  });
+
+
+  /* =========================================================
+     SIGN OUT
+     ========================================================= */
+
+  signOutBtn.addEventListener("click", async () => {
+
+    signOutBtn.disabled = true;
+    signOutBtn.textContent = "Signing Out...";
+
+    try {
+
+      const {
+        error
+      } = await supabaseClient.auth.signOut({
+        scope: "local"
+      });
+
+      if (error) {
+        console.error("Sign out error:", error);
+      }
+
+    } catch (error) {
+      console.error("Sign out exception:", error);
+    }
+
+    /*
+      Clear only this application's local Supabase session.
+      This does NOT delete the Supabase account.
+    */
+
+    const keysToRemove = [];
+
+    for (let i = 0; i < localStorage.length; i++) {
+
+      const key = localStorage.key(i);
+
+      if (
+        key &&
+        (
+          key.startsWith("sb-") ||
+          key.includes("supabase")
+        )
+      ) {
+        keysToRemove.push(key);
+      }
+    }
+
+    keysToRemove.forEach(key => {
+      localStorage.removeItem(key);
+    });
+
+    sessionStorage.clear();
+
+    window.location.href = window.location.pathname;
+  });
+
+
+  /* =========================================================
+     CLEAR
+     ========================================================= */
+
+  clearBtn.addEventListener("click", () => {
+
     postText.value = "";
-    hideMessage();
+    clearMessage();
+
   });
 
-  document.getElementById("signOutBtn").addEventListener("click", async () => {
-  try {
-    await supabaseClient.auth.signOut({ scope: "local" });
-  } catch (error) {
-    console.error("Sign out error:", error);
-  }
 
-  window.location.href = window.location.pathname;
-});
+  /* =========================================================
+     CREATE DRAFT
+     ========================================================= */
 
-  document.getElementById("reconnectBtn").addEventListener("click", () => {
-    window.location.href =
-      SUPABASE_URL + "/functions/v1/linkedin-oauth";
-  });
+  createDraftBtn.addEventListener("click", () => {
 
-  document.getElementById("createDraftBtn").addEventListener("click", () => {
     const text = postText.value.trim();
 
     if (!text) {
-      showMessage("Enter an idea first.");
+      showMessage("Enter an idea first.", "error");
       return;
     }
 
     showMessage(
-      "Draft captured. AI research, voice review and fact-checking will be connected here next."
+      "Draft captured. AI research, voice review and fact-checking will be added next."
     );
+
   });
 
-  document.getElementById("publishBtn").addEventListener("click", async () => {
+
+  /* =========================================================
+     RECONNECT LINKEDIN
+     ========================================================= */
+
+  reconnectBtn.addEventListener("click", () => {
+
+    window.location.href =
+      SUPABASE_URL +
+      "/functions/v1/linkedin-oauth";
+
+  });
+
+
+  /* =========================================================
+     PUBLISH TO LINKEDIN
+     ========================================================= */
+
+  publishBtn.addEventListener("click", async () => {
 
     const text = postText.value.trim();
 
     if (!text) {
-      showMessage("Enter the post you want to publish first.");
+      showMessage(
+        "Enter the LinkedIn post text first.",
+        "error"
+      );
       return;
     }
+
 
     const confirmed = window.confirm(
       "Publish this post directly to your personal LinkedIn profile?"
@@ -316,59 +657,145 @@
       return;
     }
 
-    hideMessage();
 
-    const {
-      data: { session },
-      error: sessionError
-    } = await supabaseClient.auth.getSession();
+    publishBtn.disabled = true;
+    publishBtn.textContent = "Publishing...";
+    clearMessage();
 
-    if (sessionError || !session) {
-      showMessage("Your UNMAPPED session has expired. Please sign in again.");
-      return;
-    }
-
-    showMessage("Publishing to LinkedIn...");
 
     try {
 
+      /*
+        IMPORTANT:
+        Refresh the Supabase session immediately before
+        calling the protected linkedin-post function.
+      */
+
+      const {
+        data: refreshed,
+        error: refreshError
+      } = await supabaseClient.auth.refreshSession();
+
+
+      if (refreshError || !refreshed.session) {
+
+        console.error(
+          "Session refresh failed:",
+          refreshError
+        );
+
+        showMessage(
+          "Your UNMAPPED session has expired. Please sign in again.",
+          "error"
+        );
+
+        await supabaseClient.auth.signOut({
+          scope: "local"
+        });
+
+        publishBtn.disabled = false;
+        publishBtn.textContent = "Publish to LinkedIn";
+
+        return;
+      }
+
+
+      const accessToken =
+        refreshed.session.access_token;
+
+
+      /*
+        Call the secured Supabase Edge Function.
+      */
+
       const response = await fetch(
-        SUPABASE_URL + "/functions/v1/linkedin-post",
+        SUPABASE_URL +
+        "/functions/v1/linkedin-post",
         {
           method: "POST",
+
           headers: {
             "Content-Type": "application/json",
-            "Authorization": "Bearer " + session.access_token
+            "Authorization":
+              "Bearer " + accessToken
           },
+
           body: JSON.stringify({
             text: text
           })
         }
       );
 
-      const result = await response.json();
+
+      let result = {};
+
+      try {
+        result = await response.json();
+      } catch (jsonError) {
+        result = {};
+      }
+
+
+      console.log(
+        "LinkedIn publish response:",
+        response.status,
+        result
+      );
+
 
       if (!response.ok) {
-        console.error(result);
+
+        const errorText =
+          result.message ||
+          result.error ||
+          "LinkedIn publishing failed.";
+
         showMessage(
-          "LinkedIn publishing failed: " +
-          (result.message || result.error || "Unknown error")
+          errorText,
+          "error"
         );
+
+        publishBtn.disabled = false;
+        publishBtn.textContent = "Publish to LinkedIn";
+
         return;
       }
 
-      showMessage("Published successfully to LinkedIn.");
+
+      showMessage(
+        "Published successfully to your LinkedIn profile."
+      );
+
+
+      postText.value = "";
+
 
     } catch (error) {
 
-      console.error(error);
+      console.error(
+        "Publishing error:",
+        error
+      );
 
       showMessage(
-        "Could not reach the LinkedIn publishing service."
+        "Could not reach the LinkedIn publishing service.",
+        "error"
       );
+
     }
 
+
+    publishBtn.disabled = false;
+    publishBtn.textContent = "Publish to LinkedIn";
+
   });
+
+
+  /* =========================================================
+     START APP
+     ========================================================= */
+
+  loadSession();
 
 </script>
 
