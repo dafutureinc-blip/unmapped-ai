@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UNMAPPED AI</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      background: #0b0d0f;
+      color: #f4f4f4;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 40px;
+    }
+
+    .brand {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: 3px;
+    }
+
+    .brand span {
+      color: #8fa58a;
+    }
+
+    button {
+      border: 0;
+      border-radius: 8px;
+      padding: 12px 18px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .primary {
+      background: #8fa58a;
+      color: #101310;
+    }
+
+    .secondary {
+      background: #202427;
+      color: #fff;
+    }
+
+    .danger {
+      background: #542525;
+      color: #fff;
+    }
+
+    .card {
+      background: #15191c;
+      border: 1px solid #292e32;
+      border-radius: 14px;
+      padding: 24px;
+      margin-bottom: 22px;
+    }
+
+    h1 {
+      font-size: 34px;
+      margin: 0 0 10px;
+    }
+
+    h2 {
+      font-size: 19px;
+      margin-top: 0;
+    }
+
+    .muted {
+      color: #92999f;
+      line-height: 1.6;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 180px;
+      resize: vertical;
+      background: #0e1113;
+      color: #fff;
+      border: 1px solid #343a3f;
+      border-radius: 10px;
+      padding: 16px;
+      font-size: 16px;
+      line-height: 1.6;
+      outline: none;
+    }
+
+    textarea:focus {
+      border-color: #8fa58a;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+
+    .status {
+      margin-top: 14px;
+      padding: 12px;
+      border-radius: 8px;
+      background: #101315;
+      color: #9da5aa;
+      display: none;
+    }
+
+    .status.show {
+      display: block;
+    }
+
+    .login {
+      max-width: 430px;
+      margin: 100px auto;
+    }
+
+    input {
+      width: 100%;
+      background: #0e1113;
+      color: #fff;
+      border: 1px solid #343a3f;
+      border-radius: 8px;
+      padding: 13px;
+      margin-bottom: 12px;
+      font-size: 15px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .connection {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    .pill {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 20px;
+      background: #203022;
+      color: #9ec39e;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .draft {
+      white-space: pre-wrap;
+      background: #0e1113;
+      border: 1px solid #343a3f;
+      border-radius: 10px;
+      padding: 18px;
+      line-height: 1.65;
+      min-height: 120px;
+    }
+
+    @media (max-width: 700px) {
+      .container {
+        padding: 24px 16px 60px;
+      }
+
+      .header {
+        align-items: flex-start;
+      }
+
+      h1 {
+        font-size: 28px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- LOGIN -->
+  <div id="loginScreen" class="login card">
+    <div class="brand">UNMAPPED <span>AI</span></div>
+
+    <h2 style="margin-top:30px;">Sign in</h2>
+
+    <p class="muted">
+      Your private workspace for LinkedIn content and automation.
+    </p>
+
+    <input id="email" type="email" placeholder="Email">
+    <input id="password" type="password" placeholder="Password">
+
+    <button class="primary" style="width:100%;" onclick="signIn()">
+      Sign In
+    </button>
+
+    <div id="loginStatus" class="status"></div>
+  </div>
+
+
+  <!-- DASHBOARD -->
+  <div id="dashboard" class="container hidden">
+
+    <div class="header">
+      <div class="brand">UNMAPPED <span>AI</span></div>
+
+      <button class="secondary" onclick="signOut()">
+        Sign Out
+      </button>
+    </div>
+
+
+    <div class="card">
+      <h1>What are we working on?</h1>
+
+      <p class="muted">
+        Give UNMAPPED a thought, story, photograph, link, observation,
+        or rough idea. The system will eventually research, write,
+        challenge and prepare it for approval.
+      </p>
+
+      <textarea
+        id="inputText"
+        placeholder="Example: I want to write something about my son building a ship after seeing one on TV..."
+      ></textarea>
+
+      <div class="actions">
+        <button class="primary" onclick="createDraft()">
+          Create Draft
+        </button>
+
+        <button class="secondary" onclick="clearWorkspace()">
+          Clear
+        </button>
+      </div>
+
+      <div id="inputStatus" class="status"></div>
+    </div>
+
+
+    <div id="draftCard" class="card hidden">
+      <h2>Draft</h2>
+
+      <div id="draftText" class="draft"></div>
+
+      <div class="actions">
+        <button class="primary" onclick="publishPost()">
+          APPROVE & PUBLISH
+        </button>
+
+        <button class="secondary" onclick="editDraft()">
+          EDIT
+        </button>
+
+        <button class="danger" onclick="rejectDraft()">
+          REJECT
+        </button>
+      </div>
+
+      <div id="publishStatus" class="status"></div>
+    </div>
+
+
+    <div class="card">
+      <h2>LinkedIn</h2>
+
+      <div class="connection">
+        <div>
+          <div id="linkedinStatus">
+            Checking LinkedIn connection...
+          </div>
+          <div class="muted" style="margin-top:6px;">
+            Personal LinkedIn profile publishing
+          </div>
+        </div>
+
+        <button class="primary" onclick="connectLinkedIn()">
+          Connect LinkedIn
+        </button>
+      </div>
+    </div>
+
+
+    <div class="card">
+      <h2>Automation</h2>
+
+      <p class="muted">
+        Content → Research → Draft → Voice Review → Fact Check →
+        Approval → LinkedIn
+      </p>
+
+      <span class="pill">MVP BUILD</span>
+    </div>
+
+  </div>
+
+
+<script>
+
+  const SUPABASE_URL =
+    "https://rdcqxvprrlmnfhijouez.supabase.co";
+
+  const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_p5z4XeG6zW9R4ZoqrqP9NA_wFATr18j";
+
+  const supabaseClient =
+    supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_PUBLISHABLE_KEY
+    );
+
+
+  // -------------------------
+  // AUTH
+  // -------------------------
+
+  async function signIn() {
+
+    const email =
+      document.getElementById("email").value.trim();
+
+    const password =
+      document.getElementById("password").value;
+
+    if (!email || !password) {
+      showStatus(
+        "loginStatus",
+        "Enter your email and password."
+      );
+      return;
+    }
+
+    const { error } =
+      await supabaseClient.auth.signInWithPassword({
+        email,
+        password
+      });
+
+    if (error) {
+      showStatus(
+        "loginStatus",
+        error.message
+      );
+      return;
+    }
+
+    showDashboard();
+  }
+
+
+  async function signOut() {
+
+    await supabaseClient.auth.signOut();
+
+    document
+      .getElementById("dashboard")
+      .classList.add("hidden");
+
+    document
+      .getElementById("loginScreen")
+      .classList.remove("hidden");
+  }
+
+
+  function showDashboard() {
+
+    document
+      .getElementById("loginScreen")
+      .classList.add("hidden");
+
+    document
+      .getElementById("dashboard")
+      .classList.remove("hidden");
+
+    checkLinkedIn();
+  }
+
+
+  // -------------------------
+  // LINKEDIN
+  // -------------------------
+
+  function connectLinkedIn() {
+
+    window.location.href =
+      SUPABASE_URL +
+      "/functions/v1/linkedin-oauth";
+  }
+
+
+  async function checkLinkedIn() {
+
+    const { data, error } =
+      await supabaseClient
+        .from("linkedin_connections")
+        .select("member_name")
+        .eq("provider", "linkedin")
+        .limit(1);
+
+    const element =
+      document.getElementById("linkedinStatus");
+
+    if (!error && data && data.length > 0) {
+
+      element.innerHTML =
+        '<span class="pill">CONNECTED</span> ' +
+        data[0].member_name;
+
+    } else {
+
+      element.innerHTML =
+        '<span style="color:#c99;">Not connected</span>';
+
+    }
+  }
+
+
+  // -------------------------
+  // DRAFT
+  // -------------------------
+
+  function createDraft() {
+
+    const input =
+      document.getElementById("inputText")
+        .value
+        .trim();
+
+    if (!input) {
+
+      showStatus(
+        "inputStatus",
+        "Give me something to work with first."
+      );
+
+      return;
+    }
+
+    /*
+      TEMPORARY MVP BEHAVIOUR
+
+      Until the AI API is connected, the dashboard
+      simply places the user's idea into the draft area.
+
+      The next stage will replace this with:
+      Research → AI → Subbrat Voice → Review → Draft
+    */
+
+    document.getElementById("draftText").textContent =
+      input;
+
+    document
+      .getElementById("draftCard")
+      .classList.remove("hidden");
+
+    document
+      .getElementById("inputStatus")
+      .classList.remove("show");
+  }
+
+
+  function editDraft() {
+
+    const draft =
+      document.getElementById("draftText")
+        .textContent;
+
+    document.getElementById("inputText").value =
+      draft;
+
+    document
+      .getElementById("inputText")
+      .focus();
+  }
+
+
+  function rejectDraft() {
+
+    document
+      .getElementById("draftCard")
+      .classList.add("hidden");
+
+    document.getElementById("draftText")
+      .textContent = "";
+
+  }
+
+
+  function clearWorkspace() {
+
+    document.getElementById("inputText")
+      .value = "";
+
+    document
+      .getElementById("draftCard")
+      .classList.add("hidden");
+
+  }
+
+
+  // -------------------------
+  // PUBLISH
+  // -------------------------
+
+  async function publishPost() {
+
+    const draft =
+      document.getElementById("draftText")
+        .textContent
+        .trim();
+
+    if (!draft) return;
+
+    showStatus(
+      "publishStatus",
+      "Publishing to your personal LinkedIn..."
+    );
+
+    const {
+      data: { session }
+    } = await supabaseClient.auth.getSession();
+
+    if (!session) {
+
+      showStatus(
+        "publishStatus",
+        "Your session has expired. Please sign in again."
+      );
+
+      return;
+    }
+
+
+    const response =
+      await fetch(
+        SUPABASE_URL +
+        "/functions/v1/linkedin-post",
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization":
+              "Bearer " + session.access_token
+          },
+
+          body: JSON.stringify({
+            text: draft
+          })
+        }
+      );
+
+
+    const result =
+      await response.json();
+
+
+    if (!response.ok) {
+
+      showStatus(
+        "publishStatus",
+        result.error ||
+        "LinkedIn publishing failed."
+      );
+
+      return;
+    }
+
+
+    showStatus(
+      "publishStatus",
+      "Published successfully to your personal LinkedIn profile."
+    );
+  }
+
+
+  // -------------------------
+  // STATUS
+  // -------------------------
+
+  function showStatus(id, message) {
+
+    const element =
+      document.getElementById(id);
+
+    element.textContent = message;
+
+    element.classList.add("show");
+  }
+
+
+  // -------------------------
+  // STARTUP
+  // -------------------------
+
+  async function initialize() {
+
+    const {
+      data: { session }
+    } = await supabaseClient.auth.getSession();
+
+    if (session) {
+      showDashboard();
+    }
+  }
+
+
+  initialize();
+
+</script>
+
+</body>
+</html>
