@@ -272,9 +272,14 @@
   });
 
   document.getElementById("signOutBtn").addEventListener("click", async () => {
-    await supabaseClient.auth.signOut();
-    window.location.reload();
-  });
+  try {
+    await supabaseClient.auth.signOut({ scope: "local" });
+  } catch (error) {
+    console.error("Sign out error:", error);
+  }
+
+  window.location.href = window.location.pathname;
+});
 
   document.getElementById("reconnectBtn").addEventListener("click", () => {
     window.location.href =
